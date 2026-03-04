@@ -221,7 +221,7 @@ Django makes many to many relationships fairly straightforward:
 
 ```python
 class Genre(models.Model):
-    name = CharField(max_length=50)
+    name = models.CharField(max_length=50)
 
 class Book(models.Model):
     title = models.Charfield(max_length=200)
@@ -262,10 +262,12 @@ The DecimalField can be helpful for specifying more precise fixed point numbers 
 
 ```python
 class Item(models.Model):
-    price = DecimalField(decimal_places=2)
+    price = DecimalField(decimal_places=2, max_digits=5)
 ```
 
 In the example the `decimal_places` argument ensures there will only be 2 decimal places allowed.
+
+The `max_digits` argument determines the overall maximum number of digits that are allowed by the field and goes hand in hand with `decimal_places`.
 
 In addition, many fields can include special optional arguments that alter their behavior:
 

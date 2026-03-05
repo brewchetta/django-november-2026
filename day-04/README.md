@@ -127,7 +127,7 @@ def client_create(request):
             client_name = form.cleaned_data['name']
             new_client = Client(name=client_name)
             new_client.save()
-            redirect('homepage')
+            return redirect('homepage')
         else:
             return render(request, "my_app/client_create.html", { "form": form })
 
@@ -187,7 +187,7 @@ def client_create(request):
         if form.is_valid():
             # the form automatically has functionality to save to the database
             form.save() 
-            redirect('homepage')
+            return redirect('homepage')
         else:
             return render(request, "my_app/client_create.html", { "form": form })
 
@@ -209,7 +209,7 @@ def client_update(request, pk):
         form = ClientForm(request.POST, instance=client)
         if form.is_valid():
             form.save() 
-            redirect('homepage')
+            return redirect('homepage')
         else:
             return render(request, "my_app/client_create.html", { "form": form })
 

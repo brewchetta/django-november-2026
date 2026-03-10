@@ -29,6 +29,9 @@ Create a superuser and navigate to the admin panel. Under the users tab the supe
 The user signup requires a specialized form called the `UserCreationForm`:
 
 ```python
+# ...other imports
+from django.contrib.auth.forms import UserCreationForm
+
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
@@ -100,7 +103,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 
 def logout_user(request):
-    logout(rrequest)
+    logout(request)
     return redirect('homepage')
 ```
 
@@ -186,7 +189,7 @@ from django.contrib.auth.decorators import login_required
 def profile(request):
     context = { 
         "current_user": request.user, 
-        "favorite_books": user.books
+        "favorite_books": request.user.books
     }
     return render(request, "my_app/profile.html", context)
 ```

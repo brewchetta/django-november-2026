@@ -86,3 +86,9 @@ def cat_create(request):
 ```
 
 Because the request now includes file data in addition to post data, the view now accounts for that.
+
+To show your data in a view you will use `some_object.image.url` which refers to the place the image is stored for an image's `src` attribute:
+
+```html
+<img src="{{ cat.image.src }}" />
+```

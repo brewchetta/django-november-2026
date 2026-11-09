@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Welcome to the Lib</h1>
+
+<h2>Top Five Recommendations:</h2>
+
+<!-- START FOR -->
+{% for book in top_five %}
+
+    <div>
+        <h3>{{ book.title }}</h3>
+        <h4>{{ book.author }}</h4>
+        <p>{{ book.description }}</p>
+    </div>
+
+{% endfor %}
+<!-- END FOR -->
+
+{% endblock %}

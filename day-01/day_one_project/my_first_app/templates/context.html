@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Context Page</h1>
+
+    {% if days_until_xmas > 10 %}
+
+        <p>Days until xmas: {{ days_until_xmas }} days</p>
+    
+    {% elif days_until_xmas > 5 %}
+    
+        <p>Days until xmas: {{ days_until_xmas }} days, {{ hours_remaining }} hours</p>
+        
+    {% else %}
+
+        <p>Days until xmas: {{ days_until_xmas }} days, {{ hours_remaining }} hours, {{ minutes_remaining }} minutes</p>
+
+    {% endif %}
+        
+    <img src="{{ xmas_image }}" alt="Rudolph">
+    
+</body>
+</html>
+
+{% endblock %}

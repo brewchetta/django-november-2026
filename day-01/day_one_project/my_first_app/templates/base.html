@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Cool App</title>
+</head>
+<body>
+
+    <!-- the {% url 'home' %} allows us to interpolate the route to 'home' defined in urls.py -->
+    
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About Us</a>
+        <a href="{% url 'context' %}">Context</a>
+        <a href="{% url 'contacts' %}">Contacts</a>
+    </nav>
+
+    <!-- the content will be between the navbar and the footer because we put our special tags between the navbar and the footer -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- the things in the special tags are a special syntax for python/django -->
+
+    <footer>
+        I am the footer
+    </footer>
+
+</body>
+</html>

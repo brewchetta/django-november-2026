@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Contacts</h1>
+
+    <p>Current time is now: {{ current_time }}</p>
+
+    <p>Our contact information is listed here</p>
+
+    <p>The context passed down is: {{ some_variable }}</p>
+
+    <!-- looping over a list -->
+    <ul>
+        {% for c in our_contacts %}
+
+        <li>{{ c }}</li>
+
+        {% endfor %}
+        <!-- the endfor is VERY important -->
+    </ul>
+    
+{% endblock %}

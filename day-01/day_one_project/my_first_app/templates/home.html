@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+{% extends 'base.html' %}
+{% block content %}
+
+    <!-- the content of our page goes inside the special django block above -->
+    <!-- it will now show up wrapped by the base.html -->
+
     <h1>Welcome to Our First App!</h1>
 
     <p>Blah blah blah I'm a paragraph</p>
 
-</body>
-</html>
+{% endblock %}

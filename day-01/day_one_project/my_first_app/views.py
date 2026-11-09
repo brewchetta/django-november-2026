@@ -50,4 +50,58 @@ def contacts(request):
     }
     return render(request, "contacts.html", context)
 
+menu = {
+    1: {
+        "id": 1,
+        "name": "Cheese Pizza",
+        "description": "It's just pizza with cheese, the price is the only thing to get excited about",
+        "price": 0.01
+    },
+    2: {
+        "id": 2,
+        "name": "Meatlovers Pizza",
+        "description": "It's for people who love meat",
+        "price": 8.99
+    },
+    3: {
+        "id": 3,
+        "name": "Grandma Slice",
+        "description": "Slices made by various grandmas",
+        "price": 4.99
+    },
+}
+
+def menu_list(request):
+    context = { "pizzas": [ menu[pizza_key] for pizza_key in menu] }
+    return render(request, "menu_list.html", context)
+
+
+from django.http import Http404
+
+def menu_detail(request, id):
+    found_pizza = menu.get(id)
+
+    if found_pizza:
+        context = { "found_pizza": found_pizza }
+        return render(request, "menu_detail.html", context)
+
+    else:
+        raise Http404("404: That pizza doesn't exist....")
+
+
+def calculator(request, num1, num2, operation):
+    result = None
+
+    if operation == "plus":
+        result = num1 + num2
+    elif operation == "minus":
+        result = num1 - num2
+    elif operation == "multiply":
+        result = num1 * num2
+    elif operation == "divide":
+        result = num1 / num2
+
+    context = { "num1": num1, "num2": num2, "result": result, "operation": operation }
+    return render(request, "calculator.html", context)
+
 # all html lives in a special `templates` folder we need to create

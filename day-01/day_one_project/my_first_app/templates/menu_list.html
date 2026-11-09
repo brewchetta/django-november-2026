@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Pizza Menu</h1>
+
+{% for p in pizzas %}
+
+    <p>
+        <a href="{% url 'menu_detail' p.id %}">{{ p.name }}</a>
+    </p>
+
+{% endfor %}
+
+{% endblock %}

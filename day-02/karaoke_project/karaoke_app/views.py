@@ -6,11 +6,13 @@ songs_list = [
         "id": 1,
         "title": "Never Gonna Give You Up",
         "artist": "Rick Astley",
+        "video_id": "6PLatPMoxGw?si=fLqudrUkDO4Y23AY",
     },
     {
         "id": 2,
         "title": "Bohemian Rhapsody",
         "artist": "Queen",
+        "video_id": "yvEcMrstp80?si=-QsGKzZEqtaiyR8p",
     }
 ]
 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Welcome to the Karaoke Party</h1>
+
+<!-- you must load static for each template that uses it -->
+{% load static %}
+<img class="header-img" src="{% static 'karaoke_mic.jpg' %}" alt="hand holding a karaoke mic" />
+
+{% for s in songs %}
+
+    <div>
+        <a href="{% url 'song_detail' s.id %}">{{ s.title }} by {{ s.artist }}</a>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

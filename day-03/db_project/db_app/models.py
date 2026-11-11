@@ -12,8 +12,14 @@ class WordDefinition(models.Model):
     definition = models.TextField()
     use = models.TextField()
 
+    # null=True and blank=True allow this to be null in the DB
+    phonetics = models.CharField(null=True, blank=True)
+
     def __str__(self):
         return f"{self.id} - {self.word}"
+
+
+
 
 # running CRUD commands via `python manage.py shell`:
 

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Word Definitions:</h1>
+
+{% for w in all_words %}
+
+    <div>
+        <a href="{% url 'word_detail' w.id %}">{{ w.word.capitalize }}</a>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

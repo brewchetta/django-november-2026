@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+
+    <h2>{{ found_word.word }}</h2>
+
+    <h3>Definition:</h3>
+    <p>{{ found_word.definition }}</p>
+
+    <h3>Example use:</h3>
+    <p>{{ found_word.use }}</p>
+
+</div>
+
+{% endblock %}

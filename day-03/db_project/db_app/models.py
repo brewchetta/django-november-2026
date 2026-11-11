@@ -6,7 +6,9 @@ class WordDefinition(models.Model):
     # each attribute we define will be a column in the db
 
     # CharField means that word will be short text
-    word = models.CharField()
+    word = models.CharField(unique=True, max_length=50)
+    # unique means it must be unique in the db
+    # max_length means it can only be 50 characters at most
 
     # TextField is for longer text
     definition = models.TextField()

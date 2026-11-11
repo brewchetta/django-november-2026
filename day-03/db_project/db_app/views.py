@@ -34,4 +34,29 @@ def word_detail(request, id):
     return render(request, 'word_detail.html', context)
 
 
-# FOR THIS AFTERNOON: how to query the db and if it doesn't exist we add it to the db
+# detail using slug and get_object_or_404 ##########################################
+
+from .dictionary_api import retrieve_word
+from django.shortcuts import get_object_or_404
+
+def word_detail_by_slug(request, word):
+    try:
+        found_word = WordDefinition.objects.get(word=word)
+        context = { 'found_word': found_word }
+        return render(request, 'word_detail.html', context)
+    except:
+        # use API to find the word if it exists
+        data = retrieve_word(word)
+
+        if data:
+            # get the definition and use examples
+            definition = data["senses"][0]["definition"]
+            use = "; ".join(data["senses"][0]["examples"])
+            # save it to the db
+            new_word = WordDefinition(word=word, definition=definition, use=use)
+            new_word.save()
+            # render the new_word
+            context = { 'found_word': new_word }
+            return render(request, 'word_detail.html', context)
+        else:
+            raise Http404("That word does not exist...")

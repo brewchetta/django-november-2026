@@ -7,11 +7,25 @@
 
     <h2>{{ found_word.word }}</h2>
 
+    <p>Categories:</p>
+
+    {% for c in found_word.categories.all %}
+        <p>{{ c.name }}</p>
+    {% endfor %}
+
     <h3>Definition:</h3>
     <p>{{ found_word.definition }}</p>
 
     <h3>Example use:</h3>
     <p>{{ found_word.use }}</p>
+
+    <!-- we use .examples because that is the related_name in models.py -->
+    {% for ex in found_word.examples.all %}
+
+        <p>{{ ex.content }}</p>
+        <p>My foreign key is: {{ ex.word.id }}</p>
+
+    {% endfor %}
 
 </div>
 

@@ -21,6 +21,21 @@ class WordDefinition(models.Model):
         return f"{self.id} - {self.word}"
 
 
+class WordExample(models.Model):
+    content = models.TextField()
+    # ForeignKey will associate this model to another model
+    # this model will "belong" to the other model and the other model "has many" of this one
+    word = models.ForeignKey(WordDefinition, on_delete=models.CASCADE, related_name="examples")
+    # the first argument is the model it belongs to
+    # on_delete determines if we delete this if it's "parent" gets deleted
+    # related_name determines what the "parent" calls its "children"
+
+
+class Category(models.Model):
+    name = models.CharField()
+    # many to many means a category can have many words and words can have many categories
+    words = models.ManyToManyField(WordDefinition, blank=True, related_name="categories")
+
 
 
 # running CRUD commands via `python manage.py shell`:

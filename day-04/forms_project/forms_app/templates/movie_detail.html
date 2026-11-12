@@ -5,6 +5,24 @@
 <p>Director: {{ movie.director }}</p>
 <p>Runtime: {{ movie.runtime_in_minutes }} minutes</p>
 <p>Release Date: {{ movie.release_date }}</p>
+
+<h2>Characters</h2>
+
+{% for character in movie.characters.all %}
+
+    <p>
+        {{ character.name }} played by {{ character.actor }} 
+        <a href="{% url 'character_edit' character.id %}">
+            <button>Edit</button>
+        </a>
+
+        <a href="{% url 'character_delete' character.id %}">
+            <button>Delete</button>
+        </a>
+    </p>
+
+{% endfor %}
+
 <a href="{% url 'movie_edit' movie.title_slug %}">
     <button>Edit</button>
 </a>

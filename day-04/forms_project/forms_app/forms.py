@@ -1,5 +1,5 @@
 from django import forms
-from .models import Movie
+from .models import Movie, Character
 
 # class MovieForm(forms.Form):
 #     title = forms.CharField(max_length=100)
@@ -17,3 +17,9 @@ class MovieForm(forms.ModelForm):
 
         # SYNTAX FOR INDIVIDUAL FIELDS
         fields = ['title', 'title_slug', 'runtime_in_minutes', 'director', 'release_date']
+
+
+class CharacterForm(forms.ModelForm):
+    class Meta:
+        model = Character
+        fields = "__all__"

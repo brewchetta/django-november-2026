@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect # make sure you import redirect!
-from .models import Movie
+from .models import Movie, Character
 from django.shortcuts import get_object_or_404
 
 
@@ -75,3 +75,51 @@ def movie_delete(request, title_slug):
     # otherwise show the confirm delete page
     context = { 'movie': movie }
     return render(request, 'movie_delete.html', context)
+
+
+# CHARACTER CREATE ###############################
+
+from .forms import CharacterForm
+
+def character_create(request):
+    if request.method == "POST":
+        form = CharacterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            context = { 'form': CharacterForm() }
+            return render(request, 'character_create.html', context)
+
+    context = { 'form': CharacterForm() }
+    return render(request, 'character_create.html', context)
+
+
+# CHARACTER EDIT ################################
+
+def character_edit(request, id):
+    character = get_object_or_404(Character, id=id)
+
+    if request.method == "POST":
+        form = CharacterForm(request.POST, instance=character)
+        if form.is_valid():
+            form.save()
+            return redirect('movie_detail', character.movie.title_slug)
+        else:
+            context = { 'form': form }
+            return render(request, 'character_edit.html', context)
+
+    context = { 'form': CharacterForm(instance=character) }
+    return render(request, 'character_edit.html', context)
+
+# CHARACTER DELETE ###############################
+
+def character_delete(request, id):
+    character = get_object_or_404(Character, id=id)
+
+    if request.method == "POST":
+        character.delete()
+        return redirect('movie_detail', character.movie.title_slug)
+
+    context = { 'character': character }
+    return render(request, 'character_delete.html', context)

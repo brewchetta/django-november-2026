@@ -6,6 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'movie_create' %}">Add New Movie</a>
+        <a href="{% url 'character_create' %}">Add New Character</a>
+    </nav>
     
     {% block content %}
     {% endblock %}

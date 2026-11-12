@@ -17,3 +17,18 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Character(models.Model):
+    name = models.CharField(max_length=100)
+    actor = models.CharField(max_length=100)
+
+    def name_slug(self):
+        return self.name.lower().replace(" ", "-")
+
+    # ForeignKey is for one to many relationship
+    # character belongs to a movie
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="characters")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

@@ -3,6 +3,17 @@
 
 <h1>Welcome Home</h1>
 
+<form>
+    <input type="text" id="search" name="search">
+    <input type="submit" value="Search">
+
+    <label for="limit">Number of Items Returned:</label>
+    <select name="limit" id="limit">
+        <option default value="3">3</option>
+        <option value="5">5</option>
+    </select>
+</form>
+
 {% for m in movies %}
 
 <div>

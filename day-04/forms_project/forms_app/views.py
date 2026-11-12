@@ -2,9 +2,22 @@ from django.shortcuts import render, redirect # make sure you import redirect!
 from .models import Movie, Character
 from django.shortcuts import get_object_or_404
 
-
 def home(request):
-    context = { 'movies': Movie.objects.all() }
+    # we can get query parameters this way
+    search_term = request.GET.get('search')
+    limit = request.GET.get('limit')
+    movie_query_set = Movie.objects.all()
+
+    # filter the movies based on the search term
+    if search_term:
+        movie_query_set = movie_query_set.filter(title__contains=search_term)
+
+    if limit:
+        parsed_limit = int(limit)
+        movie_query_set = movie_query_set[:parsed_limit]
+
+    # load context and return
+    context = { 'movies': movie_query_set }
     return render(request, 'home.html', context)
 
 # MOVIE DETAIL #####################################

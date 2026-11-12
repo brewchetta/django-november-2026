@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Add A New Movie</h1>
+
+<form method="post">
+    <!-- csrf is mandatory and won't submit unless it has it -->
+    {% csrf_token %}
+
+    <!-- this will render all the input fields -->
+    {{ form.as_p }}
+
+    <input type="submit">Add Movie</input>
+</form>
+
+{% endblock %}

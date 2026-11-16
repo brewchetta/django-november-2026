@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
-from .forms import SignupForm, LoginForm, MusicForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import SignupForm, LoginForm, MusicForm, ProfileForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from .models import Music
+from django.http import HttpResponse
 
 
 def home(request):
@@ -69,6 +71,26 @@ def profile(request):
     return render(request, 'profile.html')
 
 
+# PROFILE EDIT###################
+@login_required
+def profile_edit(request):
+    current_user = request.user
+    
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=current_user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            context = { 'form': form }
+            return render(request, 'profile_edit.html', context)
+
+    form = ProfileForm(instance=current_user.profile)
+    context = { 'form': form }
+    return render(request, 'profile_edit.html', context)
+
+
+
 # MUSIC CREATE ##################
 @login_required
 def music_create(request):
@@ -85,3 +107,25 @@ def music_create(request):
 
     context = { 'form': MusicForm() }
     return render(request, 'music_create.html', context)
+
+
+# MUSIC MINE  ##################
+@login_required
+def music_mine(request):
+    my_music = request.user.submitted_music.all()
+    context = { 'my_music': my_music }
+    return render(request, 'music_mine.html', context)
+
+
+# MUSIC DELETE #################
+@login_required
+def music_delete(request, id):
+    music = get_object_or_404(Music, id=id)
+    current_user = request.user
+
+    if music.user == current_user: # if authorized, delete and rerender/redirect
+        music.delete()
+        return redirect('music_mine')
+
+    else: # if users don't match we show the user they are not authorized...
+        return HttpResponse("Unauthorized to delete that...", status=401)

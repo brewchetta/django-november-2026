@@ -13,6 +13,7 @@
         <!-- links if a user is logged in -->
         {% if request.user.is_authenticated %}
             <a href="{% url 'music_create' %}">Add New Music</a>
+            <a href="{% url 'music_mine' %}">Your Music</a>
             <a href="{% url 'profile' %}">{{ user.username }}'s Profile</a>
             <a href="{% url 'auth_logout' %}">Logout</a>
 

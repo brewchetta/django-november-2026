@@ -11,6 +11,12 @@
     <p>
         Password: {{ request.user.password }}
     </p>
+    <p>
+        Bio: {{ request.user.profile.bio }}
+    </p>
+    <p>
+        Favorite Artist: {{ request.user.profile.favorite_artist }}
+    </p>
 </div>
 
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>{{ request.user.username }}'s  Music</h1>
+
+<ul>
+    {% for m in my_music %}
+
+    <li>
+        {{ m.name }} - {{ m.artist }}
+        <a href="{% url 'music_delete' m.id %}">
+            <button>Delete</button>
+        </a>
+    </li>
+
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Genres</h1>
+
+{% for g in genres %}
+
+    <p>{{g.name}}</p>
+
+{% endfor %}
+
+{% endblock %}

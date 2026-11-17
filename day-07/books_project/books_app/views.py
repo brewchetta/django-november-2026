@@ -95,8 +95,31 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     template_name = 'book/form.html'
     success_url = '/books'
 
+
 # LIST BOOK #
 class BookListView(ListView):
     model = Book
     context_object_name = 'books'
     template_name = 'book/list_view.html'
+
+
+# DETAIL BOOK #
+class BookDetailView(DetailView):
+    model = Book
+    context_object_name = 'book'
+    template_name = 'book/detail_view.html'
+
+
+# EDIT/UPDATE BOOK #
+class BookUpdateView(UpdateView):
+    model = Book
+    template_name = 'book/form.html'
+    fields = ['title', 'author', 'description', 'genres']
+    success_url = '/books'
+
+
+# DELETE BOOK #
+class BookDeleteView(DeleteView):
+    model = Book
+    success_url = '/books'
+    template_name = 'book/delete.html'

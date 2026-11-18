@@ -19,4 +19,7 @@ urlpatterns = [
     path('books/<int:pk>', views.BookDetailView.as_view(), name="book_detail"),
     path('books/<int:pk>/edit', views.BookUpdateView.as_view(), name="book_update"),
     path('books/<int:pk>/delete', views.BookDeleteView.as_view(), name="book_delete"),
+
+    path('books/<int:pk>/like', views.BookLikeView.as_view(), name="book_like"),
+    path('books/favorites', views.BookFavoritedView.as_view(), name="book_favorites"),
 ]

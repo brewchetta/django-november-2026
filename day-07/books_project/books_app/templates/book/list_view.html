@@ -16,6 +16,12 @@
             <span>{{ g.name }} </span>
         {% endfor %}
 
+        <a href="{% url 'book_like' b.pk %}">
+            <button>Like</button>
+        </a>
+
+        <p>Number of Likes: {{  b.users.all.count }}</p>
+
     </div>
 
 {% endfor %}

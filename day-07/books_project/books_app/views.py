@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import TemplateView, View, ListView, DetailView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 from django.contrib.auth import get_user_model, login, logout, authenticate
@@ -123,3 +123,23 @@ class BookDeleteView(DeleteView):
     model = Book
     success_url = '/books'
     template_name = 'book/delete.html'
+
+
+# LIKE BOOK #
+class BookLikeView(LoginRequiredMixin, View):
+
+    def get(self, request, pk):
+        current_user = request.user
+        book = get_object_or_404(Book, pk=pk)
+
+        book.users.add(current_user)
+
+        return redirect('book_list')
+
+
+# FAVORITED BOOK #
+class BookFavoritedView(LoginRequiredMixin, TemplateView):
+    template_name = 'book/favorited.html'
+
+
+# username's bookshelf

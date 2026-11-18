@@ -2,8 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.mixins import CreateModelMixin
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import OceanTide, Habitat, Fish
 from .serializers import OceanTideSerializer, HabitatSerializer, FishSerializer
 
@@ -63,7 +62,7 @@ def ocean_tide_detail(request, pk):
     if request.method == "DELETE":
         tide.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
 
 # HABITAT ####################################################
 
@@ -85,6 +84,10 @@ class HabitatList(APIView):
 
 # FISH ####################################################
 
-class FishListCreate(ListCreateAPIView, CreateModelMixin):
+class FishListCreate(ListCreateAPIView):
+    queryset = Fish.objects.all()
+    serializer_class = FishSerializer
+
+class FishDetail(RetrieveUpdateDestroyAPIView):
     queryset = Fish.objects.all()
     serializer_class = FishSerializer

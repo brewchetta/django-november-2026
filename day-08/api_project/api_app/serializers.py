@@ -19,12 +19,31 @@ class FishSerializer(serializers.ModelSerializer):
         # start with the original to_representation
         data = super().to_representation(instance)
         # edit how habitats look and work
-        data['habitats'] = HabitatSerializer(instance.habitats.all(), many=True).data
+        data['habitats'] = FishHabitatSerializer(instance.habitats.all(), many=True).data
         # return the new populated version
         return data
 
 
 class HabitatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Habitat
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['fishes'] = HabitatFishSerializer(instance.fishes.all(), many=True).data
+        return data
+
+
+# special serializers that allow us to grab a model without grabbing their associations
+# this prevents an infinite loop in the serializers up above
+
+class HabitatFishSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fish
+        exclude = ['habitats']
+
+class FishHabitatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habitat
         fields = '__all__'

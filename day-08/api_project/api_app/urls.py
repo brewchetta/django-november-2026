@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/v1/habitats', views.HabitatList.as_view(), name="habitat_list"),
 
     path('api/v1/fish', views.FishListCreate.as_view(), name="fish_list_create"),
+    path('api/v1/fish/<int:pk>', views.FishDetail.as_view(), name="fish_detail"),
 ]

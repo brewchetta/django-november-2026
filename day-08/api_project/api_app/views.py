@@ -1,8 +1,11 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import OceanTide
-from .serializers import OceanTideSerializer
+from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView
+from rest_framework.mixins import CreateModelMixin
+from .models import OceanTide, Habitat, Fish
+from .serializers import OceanTideSerializer, HabitatSerializer, FishSerializer
 
 
 # WELCOME #
@@ -33,13 +36,55 @@ def ocean_tide_list(request):
             return Response({ "errors": serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
 
 
-# GET ONE #
-@api_view(["GET"])
-def ocean_tide_detail(request, id):
+# GET ONE / PATCH / PUT / DELETE #
+@api_view(["GET", "PATCH", "PUT", "DELETE"])
+def ocean_tide_detail(request, pk):
     try:
-        tide = OceanTide.objects.get(id=id)
+        tide = OceanTide.objects.get(pk=pk)
     except OceanTide.DoesNotExist:
         return Response({ 'error': '404: Does not exist' }, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = OceanTideSerializer(tide)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    # GET ONE #
+    if request.method == "GET":
+        serializer = OceanTideSerializer(tide)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # PATCH / PUT #
+    if request.method == "PATCH" or request.method == "PUT":
+        # partial=True means we don't need to send the full object to be replaced
+        serializer = OceanTideSerializer(tide, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response({ 'errors': serializer.errors }, status=status.HTTP_400_BAD_REQUEST)
+
+    # DELETE #
+    if request.method == "DELETE":
+        tide.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+# HABITAT ####################################################
+
+class HabitatList(APIView):
+
+    def get(self, request):
+        habitats = Habitat.objects.all()
+        serializer = HabitatSerializer(habitats, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        serializer = HabitatSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# FISH ####################################################
+
+class FishListCreate(ListCreateAPIView, CreateModelMixin):
+    queryset = Fish.objects.all()
+    serializer_class = FishSerializer

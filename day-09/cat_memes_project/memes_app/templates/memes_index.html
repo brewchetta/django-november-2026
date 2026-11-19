@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Cat Memes</h1>
+
+{% for m in memes %}
+
+    <!-- to show an image it will be image.url -->
+    <figure>
+        <img src="{{ m.image.url }}" alt="{{ m.title }}">
+        <figcaption>{{ m.title }}</figcaption>
+    </figure>
+
+{% endfor %}
+
+{% endblock %}
